@@ -38,7 +38,8 @@ const Hero: React.FC = () => {
       {/* Background Image with High Opacity Effect (Subtle Overlay) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&q=80&w=1920" 
+          //src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&q=80&w=1920" 
+          src="https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?auto=format&fit=crop&q=80&w=1920" 
           alt="Background Texture" 
           className="w-full h-full object-cover opacity-10 mix-blend-multiply"
         />
