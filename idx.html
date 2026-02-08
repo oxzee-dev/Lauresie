@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penser pour s'Indigner | Par Lauresie</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-white': '#FDFCF8',
+                        'warm-cream': '#F5F1E8',
+                        'soft-green': '#8B9A7D',
+                        'deep-green': '#5C6B52',
+                        'warm-orange': '#E07A5F',
+                        'soft-orange': '#F2CC8F',
+                        'dark-bg': '#1A1A1A',
+                        'dark-card': '#2D2D2D',
+                    },
+                    fontFamily: {
+                        'sans': ['"Open Sans"', 'sans-serif'],
+                        'cuba': ['"Playwrite CU Guides"', 'cursive'],
+                        'ireland': ['"Playwrite IE Guides"', 'cursive'],
+                        'handwriting': ['"Caveat"', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playwrite+CU+Guides&family=Playwrite+IE+Guides&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Gradient Text for Lauresie - Shadcn style */
+        .gradient-text-lauresie {
+            background: linear-gradient(135deg, #8B9A7D 0%, #E07A5F 50%, #5C6B52 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .dark .gradient-text-lauresie {
+            background: linear-gradient(135deg, #F2CC8F 0%, #E07A5F 50%, #8B9A7D 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+        }
+        
+        /* Typewriter with Playwrite Ireland */
+        .typewriter-text {
+            border-right: 3px solid #E07A5F;
+            animation: blink 1s infinite;
+            font-family: 'Playwrite IE Guides', cursive;
+            font-weight: 400;
+        }
+        
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: #E07A5F; }
+        }
+
+        /* Card Expansion */
+        .blog-content {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            max-height: 6rem;
+            overflow: hidden;
+            opacity: 0.8;
+        }
+        
+        .blog-content.expanded {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .glass-card {
+            background: rgba(45, 45, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(139, 154, 125, 0.4);
+        }
+
+        /* Image Hover */
+        .img-hover-zoom {
+            overflow: hidden;
+        }
+        
+        .img-hover-zoom img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .img-hover-zoom:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Link Hover */
+        .link-hover {
+            position: relative;
+        }
+        
+        .link-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #8B9A7D, #E07A5F);
+            transition: width 0.3s ease;
+        }
+        
+        .link-hover:hover::after {
+            width: 100%;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #F5F1E8; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #8B9A7D, #5C6B52); 
+            border-radius: 5px;
+        }
+        .dark ::-webkit-scrollbar-track { background: #1A1A1A; }
+        .dark ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #E07A5F, #F2CC8F);
+        }
+
+        /* Nav Scroll */
+        .nav-scrolled {
+            background: rgba(253, 252, 248, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .nav-scrolled {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        /* Float Elements */
+        .float-element {
+            transition: transform 0.3s ease;
+        }
+        
+        .float-element:hover {
+            transform: scale(1.2) rotate(5deg);
+        }
+    </style>
+</head>
+<body class="bg-warm-white dark:bg-dark-bg text-gray-800 dark:text-gray-100 transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <i data-lucide="feather" class="h-5 w-5 text-soft-green dark:text-warm-orange transition-transform group-hover:rotate-12"></i>
+                    <span class="font-cuba text-xl font-bold gradient-text-lauresie link-hover">Lauresie</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#vision" class="text-sm font-medium hover:text-soft-green dark:hover:text-warm-orange transition-colors link-hover">Vision</a>
+                    <a href="#blogs" class="text-sm font-medium hover:text-soft-green dark:hover:text-warm-orange transition-colors link-hover">Journal</a>
+                    <a href="#soumettre" class="text-sm font-medium hover:text-soft-green dark:hover:text-warm-orange transition-colors link-hover">Participer</a>
+                    
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-warm-cream dark:hover:bg-dark-card transition-all duration-300 hover:rotate-180">
+                        <i data-lucide="sun" class="h-5 w-5 hidden dark:block text-warm-orange"></i>
+                        <i data-lucide="moon" class="h-5 w-5 block dark:hidden text-deep-green"></i>
+                    </button>
+                </div>
+                
+                <div class="md:hidden flex items-center gap-4">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-warm-cream dark:hover:bg-dark-card transition-all duration-300">
+                        <i data-lucide="sun" class="h-5 w-5 hidden dark:block text-warm-orange"></i>
+                        <i data-lucide="moon" class="h-5 w-5 block dark:hidden text-deep-green"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 rounded-md hover:bg-warm-cream dark:hover:bg-dark-card transition-colors">
+                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t dark:border-gray-700 absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#vision" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-warm-cream dark:hover:bg-dark-card transition-colors">Vision</a>
+                <a href="#blogs" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-warm-cream dark:hover:bg-dark-card transition-colors">Journal</a>
+                <a href="#soumettre" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-warm-cream dark:hover:bg-dark-card transition-colors">Participer</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- Background -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-warm-cream via-warm-white to-soft-orange/20 dark:from-dark-bg dark:via-dark-card dark:to-warm-orange/10"></div>
+            
+            <!-- Floating Icons -->
+            <div class="absolute top-20 left-10 animate-float text-soft-green/30 dark:text-warm-orange/20 float-element cursor-pointer">
+                <i data-lucide="flower-2" class="w-12 h-12"></i>
+            </div>
+            <div class="absolute top-40 right-20 animate-float-slow text-soft-green/20 dark:text-warm-orange/30 float-element cursor-pointer">
+                <i data-lucide="leaf" class="w-16 h-16"></i>
+            </div>
+            <div class="absolute bottom-32 left-20 animate-float text-soft-orange/30 dark:text-warm-orange/20 float-element cursor-pointer">
+                <i data-lucide="bird" class="w-10 h-10"></i>
+            </div>
+            <div class="absolute top-60 left-1/3 animate-float text-deep-green/20 dark:text-soft-orange/20 float-element cursor-pointer">
+                <i data-lucide="wind" class="w-14 h-14"></i>
+            </div>
+            <div class="absolute bottom-20 right-10 animate-float-slow text-soft-green/25 dark:text-warm-orange/25 float-element cursor-pointer">
+                <i data-lucide="sun" class="w-12 h-12"></i>
+            </div>
+            <div class="absolute top-32 right-1/3 animate-float text-warm-orange/20 dark:text-soft-orange/30 float-element cursor-pointer">
+                <i data-lucide="flame" class="w-8 h-8"></i>
+            </div>
+            <div class="absolute bottom-40 left-1/2 animate-float text-deep-green/20 dark:text-warm-orange/20 float-element cursor-pointer">
+                <i data-lucide="mountain" class="w-10 h-10"></i>
+            </div>
+            <div class="absolute top-20 right-1/2 animate-float-slow text-soft-green/20 dark:text-soft-orange/20 float-element cursor-pointer">
+                <i data-lucide="cloud" class="w-14 h-14"></i>
+            </div>
+            
+            <div class="absolute inset-0 opacity-30 dark:opacity-10" style="background-image: radial-gradient(#8B9A7D 1px, transparent 1px); background-size: 30px 30px;"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center reveal">
+            <div class="mb-6 inline-block transform hover:scale-105 transition-transform duration-300">
+                <span class="px-4 py-1 rounded-full bg-soft-green/10 dark:bg-warm-orange/20 text-deep-green dark:text-soft-orange text-xs font-semibold tracking-widest uppercase border border-soft-green/20 dark:border-warm-orange/30">
+                    Blog Engagé
+                </span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-2 text-gray-900 dark:text-white tracking-tight">
+                Penser pour <span class="typewriter-container text-warm-orange dark:text-soft-orange">
+                    <span id="typewriter" class="typewriter-text text-5xl md:text-7xl">s'Indigner</span>
+                </span>
+            </h1>
+            
+            <!-- Subtitle: "par" in regular, "Lauresie" in Playwrite Cuba Guides with gradient -->
+            <div class="mt-6 mb-10 flex items-center justify-center gap-2">
+                <span class="text-gray-500 dark:text-gray-400 text-lg font-light">par</span>
+                <span class="font-cuba text-2xl md:text-3xl gradient-text-lauresie hover:scale-105 inline-block transition-transform cursor-default">Lauresie</span>
+            </div>
+            
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+                Un espace de réflexion critique sur les injustices contemporaines. 
+                Parce que penser, c'est déjà résister.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#blogs" class="btn-primary px-8 py-3 rounded-full bg-gradient-to-r from-soft-green to-deep-green dark:from-warm-orange dark:to-soft-orange text-white font-semibold flex items-center gap-2">
+                    <span>Lire le journal</span>
+                    <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-deep-green dark:text-warm-orange opacity-50"></i>
+        </div>
+    </section>
+
+    <!-- Vision Section - Side by Side -->
+    <section id="vision" class="py-20 bg-warm-cream/50 dark:bg-dark-card/50 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Image Side -->
+                <div class="reveal-left">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-soft-green to-warm-orange rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-700"></div>
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl img-hover-zoom">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80" 
+                                 alt="Vision de Lauresie" 
+                                 class="w-full h-[500px] object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Text Side -->
+                <div class="reveal-right space-y-6">
+                    <div>
+                        <span class="text-soft-green dark:text-warm-orange font-semibold text-sm uppercase tracking-widest">À propos</span>
+                        <h2 class="text-4xl md:text-5xl font-bold mt-2 text-gray-900 dark:text-white leading-tight">
+                            La vision d'une <span class="text-soft-green dark:text-warm-orange">Autrice</span>
+                        </h2>
+                    </div>
+                    
+                    <div class="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed text-lg font-light">
+                        <p class="reveal" style="transition-delay: 100ms;">
+                            <strong class="text-deep-green dark:text-soft-orange font-semibold">Lauresie</strong> est une voix engagée qui croit au pouvoir des mots pour éveiller les consciences. 
+                            À travers ce blog, elle explore les intersections entre justice sociale, écologie et féminisme.
+                        </p>
+                        <p class="reveal" style="transition-delay: 200ms;">
+                            "Penser pour s'Indigner" est né d'une conviction profonde : l'indignation n'est pas une émotion négative, 
+                            mais le moteur essentiel du changement.
+                        </p>
+                        <p class="reveal" style="transition-delay: 300ms;">
+                            Chaque article est une invitation à questionner le statu quo, à ne plus accepter l'inacceptable, 
+                            et à construire collectivement un monde plus juste.
+                        </p>
+                    </div>
+                    
+                    <div class="flex gap-6 pt-4 reveal" style="transition-delay: 400ms;">
+                        <div class="flex items-center gap-3 group cursor-pointer">
+                            <div class="p-3 rounded-full bg-soft-green/10 dark:bg-warm-orange/20 group-hover:bg-soft-green dark:group-hover:bg-warm-orange transition-all duration-300 group-hover:scale-110">
+                                <i data-lucide="pen-tool" class="w-5 h-5 text-soft-green dark:text-warm-orange group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Écriture engagée</span>
+                        </div>
+                        <div class="flex items-center gap-3 group cursor-pointer">
+                            <div class="p-3 rounded-full bg-soft-green/10 dark:bg-warm-orange/20 group-hover:bg-soft-green dark:group-hover:bg-warm-orange transition-all duration-300 group-hover:scale-110">
+                                <i data-lucide="heart" class="w-5 h-5 text-soft-green dark:text-warm-orange group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Passion & Vérité</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Navigation -->
+    <section class="py-8 bg-white dark:bg-dark-bg border-y border-gray-100 dark:border-gray-800 reveal">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-8 text-sm font-medium">
+                <a href="#vision" class="text-soft-green dark:text-warm-orange hover:text-deep-green dark:hover:text-soft-orange transition-all duration-300 flex items-center gap-2 group">
+                    <span class="link-hover">Vision</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                </a>
+                <span class="text-gray-300 dark:text-gray-700">•</span>
+                <a href="#blogs" class="text-soft-green dark:text-warm-orange hover:text-deep-green dark:hover:text-soft-orange transition-all duration-300 flex items-center gap-2 group">
+                    <span class="link-hover">Le Journal</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                </a>
+                <span class="text-gray-300 dark:text-gray-700">•</span>
+                <a href="#soumettre" class="text-soft-green dark:text-warm-orange hover:text-deep-green dark:hover:text-soft-orange transition-all duration-300 flex items-center gap-2 group">
+                    <span class="link-hover">Soumettre</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blogs" class="py-20 bg-warm-white dark:bg-dark-bg overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-soft-green dark:text-warm-orange font-semibold text-sm uppercase tracking-widest">Archives</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4 text-gray-900 dark:text-white">
+                    Le Journal des <span class="text-deep-green dark:text-soft-orange">Résistances</span>
+                </h2>
+            </div>
+            
+            <div id="blog-list" class="space-y-8">
+                <!-- Blogs injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Submit Form Section -->
+    <section id="soumettre" class="py-20 bg-gradient-to-b from-warm-cream to-warm-white dark:from-dark-card dark:to-dark-bg overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <span class="text-warm-orange dark:text-soft-orange font-semibold text-sm uppercase tracking-widest">Participer</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4 text-gray-900 dark:text-white">
+                    Partager votre <span class="text-soft-green dark:text-warm-orange">indignation</span>
+                </h2>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-8 shadow-xl reveal">
+                <form id="submit-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Titre</label>
+                            <input type="text" required 
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-card focus:ring-2 focus:ring-soft-green dark:focus:ring-warm-orange focus:border-transparent transition-all"
+                                   placeholder="Un titre percutant...">
+                        </div>
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Tags</label>
+                            <input type="text" required 
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-card focus:ring-2 focus:ring-soft-green dark:focus:ring-warm-orange focus:border-transparent transition-all"
+                                   placeholder="#féminisme, #climat...">
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Image Thématique</label>
+                        <div class="grid grid-cols-5 gap-3" id="image-selector">
+                            <!-- Images injected via JS -->
+                        </div>
+                        <input type="hidden" id="selected-image" required>
+                    </div>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 group-hover:text-soft-green dark:group-hover:text-warm-orange transition-colors">Contenu</label>
+                        <textarea required rows="6" 
+                                  class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-card focus:ring-2 focus:ring-soft-green dark:focus:ring-warm-orange focus:border-transparent transition-all resize-none"
+                                  placeholder="Votre texte ici..."></textarea>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="btn-primary w-full py-4 rounded-lg bg-gradient-to-r from-deep-green to-soft-green dark:from-warm-orange dark:to-soft-orange text-white font-bold flex items-center justify-center gap-2 text-lg">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        Soumettre l'article
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-warm-cream dark:bg-dark-card border-t border-gray-200 dark:border-gray-700 py-12 reveal">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <i data-lucide="feather" class="h-5 w-5 text-soft-green dark:text-warm-orange group-hover:rotate-12 transition-transform"></i>
+                <span class="font-cuba text-xl gradient-text-lauresie">Lauresie</span>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">
+                Penser, s'indigner, résister. Un blog engagé pour un monde plus juste.
+            </p>
+            <div class="flex justify-center gap-6">
+                <a href="#" class="p-2 rounded-full bg-white dark:bg-dark-bg shadow hover:shadow-lg text-gray-400 hover:text-soft-green dark:hover:text-warm-orange transition-all duration-300 hover:-translate-y-1">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="p-2 rounded-full bg-white dark:bg-dark-bg shadow hover:shadow-lg text-gray-400 hover:text-soft-green dark:hover:text-warm-orange transition-all duration-300 hover:-translate-y-1">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="p-2 rounded-full bg-white dark:bg-dark-bg shadow hover:shadow-lg text-gray-400 hover:text-soft-green dark:hover:text-warm-orange transition-all duration-300 hover:-translate-y-1">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                </a>
+            </div>
+            <div class="mt-8 text-xs text-gray-400">
+                &copy; 2026 Penser pour s'Indigner.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // Data
+        const blogs = [
+            {
+                title: "Les femmes n'ont que 64 % des droits des hommes en 2026 : et on appelle ça du progrès ?",
+                date: "2026-03-08",
+                tags: ["#égalité", "#féminisme", "#droitsdesfemmes"],
+                text: "En 2026, selon ONU Femmes, les femmes ne disposent que de 64 % des droits juridiques accordés aux hommes à l'échelle mondiale. Soixante-quatre pour cent. Pas 90, pas 80… 64. Et pourtant, on nous parle sans cesse de « progrès continus » et d'« avancées historiques ».\n\nLa Journée internationale des femmes 2026, placée sous le thème « Droits. Justice. Action. Pour TOUTES les femmes et les filles », devrait être un cri de rage plutôt qu'une célébration policée. Lois discriminatoires toujours en vigueur, protections insuffisantes contre les violences, normes sociales qui tuent à petit feu l'autonomie : le constat est accablant.\n\nPenser est s'indigner face à cette inertie. Comment accepter qu'en 2026, des pays continuent d'interdire aux femmes de voyager sans tuteur masculin, de divorcer librement ou d'hériter à égalité ?",
+                image: "theme1"
+            },
+            {
+                title: "COP30 est passée… et la sortie des fossiles reste un mirage",
+                date: "2026-01-15",
+                tags: ["#climat", "#COP30", "#justiceclimatique"],
+                text: "La COP30 à Belém en 2025 a accouché d'un mécanisme pour une « transition juste » et d'un appel à inclure les femmes. Bien. Mais la feuille de route claire pour arrêter les énergies fossiles ? Toujours pas là.\n\nOn applaudit les discours, on célèbre les petits pas, mais la réalité est brutale : les émissions continuent d'augmenter, les projets pétroliers et gaziers se multiplient, et les pays du Sud paient le prix fort sans recevoir les financements promis.\n\nPenser est s'indigner quand on voit que les pertes et préjudices, pourtant actés depuis plusieurs COP, peinent toujours à se concrétiser réellement en 2026.",
+                image: "theme2"
+            },
+            {
+                title: "Non, les pauvres ne polluent pas plus que les riches",
+                date: "2026-02-03",
+                tags: ["#justice-sociale", "#climat", "#inégalités"],
+                text: "Le préjugé est tenace : « Les pauvres polluent plus, prennent l'avion low-cost, roulent en vieux diesel. » Faux. Totalement faux. Et dangereux.\n\nEn 2026, des rapports comme celui d'ATD Quart Monde le rappellent : les 10 % les plus riches émettent environ 50 % des émissions mondiales de CO₂. Les 50 % les plus pauvres ? Moins de 10 %. Les riches polluent massivement par leur mode de vie, leurs investissements, leurs jets privés.\n\nPourtant, ce sont les quartiers populaires qui trinquent le plus : pollution de l'air, îlots de chaleur, mal-logement énergétique.",
+                image: "theme3"
+            },
+            {
+                title: "Transition énergétique du logement : quand l'Europe risque d'aggraver les inégalités",
+                date: "2026-01-28",
+                tags: ["#transitionécologique", "#logement", "#Europe"],
+                text: "L'Agence des droits fondamentaux de l'UE tire la sonnette d'alarme en 2026 : la rénovation énergétique massive des logements risque de laisser sur le carreau les ménages modestes, les personnes âgées, les personnes en situation de handicap.\n\nPrix exorbitants des travaux, aides mal ciblées, hausse des loyers après rénovation… La transition verte du bâtiment, si elle n'est pas pensée avec justice sociale, deviendra une nouvelle machine à exclure.\n\nPenser est s'indigner quand on voit que 9,2 % des Européens souffraient déjà de précarité énergétique en 2024.",
+                image: "theme4"
+            },
+            {
+                title: "Écoféminisme : quand les femmes du Sud portent la lutte pour le vivant",
+                date: "2026-02-10",
+                tags: ["#écoféminisme", "#justiceclimatique", "#Afrique"],
+                text: "De l'Amérique latine à l'Afrique, les femmes mènent des combats écoféministes : défense des terres contre les mégaprojets miniers, protection des forêts, lutte pour l'eau. Elles articulent droits des femmes, autodétermination des peuples et respect du vivant.\n\nEt pourtant, elles sont les premières victimes des violences climatiques et des représailles des industries extractives.\n\nPenser est s'indigner face à l'invisibilisation de ces résistances.",
+                image: "theme5"
+            }
+        ];
+
+        // Images
+        const themeImages = {
+            theme1: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop&q=80",
+            theme2: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop&q=80",
+            theme3: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=800&auto=format&fit=crop&q=80",
+            theme4: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&auto=format&fit=crop&q=80",
+            theme5: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&auto=format&fit=crop&q=80"
+        };
+
+        // Typewriter with Playwrite Ireland
+        const words = ["s'Indigner", "Résister", "Agir", "Grandir", "Évoluer"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+            setTimeout(typeWriter, typeSpeed);
+        }
+
+        // Render Blogs
+        function renderBlogs() {
+            const list = document.getElementById('blog-list');
+            list.innerHTML = blogs.map((blog, index) => `
+                <article class="glass-card rounded-2xl overflow-hidden shadow-lg group reveal" style="transition-delay: ${index * 100}ms">
+                    <div class="relative h-72 overflow-hidden img-hover-zoom">
+                        <img src="${themeImages[blog.image]}" 
+                             alt="${blog.title}" 
+                             class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                ${blog.tags.map(tag => `
+                                    <span class="text-xs px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 cursor-pointer hover:bg-white/30 transition-all hover:-translate-y-0.5">
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+                            <h3 class="font-handwriting text-2xl md:text-3xl font-bold text-white leading-tight drop-shadow-lg group-hover:translate-x-2 transition-transform duration-300">
+                                ${blog.title}
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 md:p-8 bg-white dark:bg-dark-card">
+                        <div class="flex items-center gap-2 mb-4 text-xs text-gray-400 uppercase tracking-wider font-semibold">
+                            <i data-lucide="calendar" class="w-3 h-3"></i>
+                            ${new Date(blog.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </div>
+                        
+                        <div class="blog-content text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line text-base font-light" id="blog-text-${index}">
+                            ${blog.text}
+                        </div>
+                        
+                        <button onclick="toggleExpand(${index})" id="btn-${index}" class="mt-6 text-soft-green dark:text-warm-orange font-semibold text-sm flex items-center gap-2 group/btn focus:outline-none hover:gap-3 transition-all">
+                            <span>Lire la suite</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-y-1" id="icon-${index}"></i>
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Toggle Expand
+        window.toggleExpand = function(index) {
+            const content = document.getElementById(`blog-text-${index}`);
+            const btn = document.getElementById(`btn-${index}`);
+            const icon = document.getElementById(`icon-${index}`);
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.querySelector('span').textContent = "Lire la suite";
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                content.classList.add('expanded');
+                btn.querySelector('span').textContent = "Réduire";
+                icon.style.transform = "rotate(180deg)";
+            }
+        };
+
+        // Render Image Selector
+        function renderImageSelector() {
+            const selector = document.getElementById('image-selector');
+            selector.innerHTML = Object.keys(themeImages).map((key, index) => `
+                <div class="relative cursor-pointer group rounded-xl overflow-hidden border-2 border-transparent hover:border-soft-green dark:hover:border-warm-orange transition-all duration-300 image-option h-24 shadow-md hover:shadow-xl hover:-translate-y-1" 
+                     onclick="selectImage('${key}', this)">
+                    <img src="${themeImages[key]}" alt="Theme ${index + 1}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/40">
+                        <i data-lucide="check" class="w-6 h-6 text-white hidden check-icon transform scale-0 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.selectImage = function(key, element) {
+            document.getElementById('selected-image').value = key;
+            document.querySelectorAll('.image-option').forEach(el => {
+                el.classList.remove('border-soft-green', 'dark:border-warm-orange', 'ring-2', 'ring-soft-green', 'dark:ring-warm-orange', 'scale-105');
+                el.querySelector('.check-icon').classList.add('hidden');
+                el.querySelector('.check-icon').classList.remove('scale-100');
+                el.querySelector('.check-icon').classList.add('scale-0');
+            });
+            element.classList.add('border-soft-green', 'dark:border-warm-orange', 'ring-2', 'ring-soft-green', 'dark:ring-warm-orange', 'scale-105');
+            element.querySelector('.check-icon').classList.remove('hidden');
+            setTimeout(() => {
+                element.querySelector('.check-icon').classList.remove('scale-0');
+                element.querySelector('.check-icon').classList.add('scale-100');
+            }, 10);
+        };
+
+        // Form Submit
+        document.getElementById('submit-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5 animate-bounce"></i> Article Soumis !';
+            btn.classList.add('bg-green-600', 'cursor-not-allowed');
+            btn.disabled = true;
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.remove('bg-green-600', 'cursor-not-allowed');
+                btn.disabled = false;
+                lucide.createIcons();
+                e.target.reset();
+                document.querySelectorAll('.image-option').forEach(el => {
+                    el.classList.remove('border-soft-green', 'dark:border-warm-orange', 'ring-2', 'scale-105');
+                    el.querySelector('.check-icon').classList.add('hidden');
+                    el.querySelector('.check-icon').classList.remove('scale-100');
+                    el.querySelector('.check-icon').classList.add('scale-0');
+                });
+            }, 3000);
+        });
+
+        // Theme Toggle
+        function initTheme() {
+            const toggle = () => {
+                document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            };
+            document.getElementById('theme-toggle').addEventListener('click', toggle);
+            document.getElementById('theme-toggle-mobile').addEventListener('click', toggle);
+            
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        // Scroll Reveal
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Nav Scroll
+        function initNavScroll() {
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            });
+        }
+
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            typeWriter();
+            renderBlogs();
+            renderImageSelector();
+            initTheme();
+            initScrollReveal();
+            initNavScroll();
+        });
+    </script>
+</body>
+</html>
